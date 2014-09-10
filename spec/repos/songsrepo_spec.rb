@@ -12,7 +12,7 @@ describe Songify::Repos::Songs do
   before(:each) do
     Songify::Repos.drop_tables
     Songify::Repos.create_tables
-
+    
     Songify.songsrepo.add(song)
     Songify.songsrepo.add(song2)
   end
@@ -25,7 +25,7 @@ describe Songify::Repos::Songs do
 
   describe "#get" do
     it "returns a specific song" do
-      result = Songify.songsrepo.get(song)
+      result = Songify.songsrepo.get(song.song_id)
       expect(result).to be_a(Songify::Song)
       expect(result.song_name).to eq("Dark Horse")
     end
@@ -50,7 +50,7 @@ describe Songify::Repos::Songs do
 
       expect(result.length).to eq(2)
 
-      Songify.songsrepo.delete(song2)
+      Songify.songsrepo.delete(song2.song_id)
 
       result2 = Songify.songsrepo.get_all
 

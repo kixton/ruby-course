@@ -8,26 +8,32 @@ module Songify
         song.instance_variable_set("@song_id", result[0]["id"].to_i)
       end
 
-      def delete(song) # D-elete
+      def delete(song_id) # D-elete
         cmd = "DELETE FROM songs WHERE id = ($1)"
-        Repos.db.exec(cmd, [song.song_id])
+        Repos.db.exec(cmd, [song_id])
       end
 
-      def get(song) # R-ead
+      def get(song_id) # R-ead
         cmd = "SELECT * FROM songs WHERE id = ($1)"
-        result = Repos.db.exec(cmd, [song.song_id]).entries
+        result = Repos.db.exec(cmd, [song_id]).entries
+        # binding.pry
         Songify::Song.new(result[0]["song_name"], result[0]["artist"], result[0]["album"], result[0]["id"].to_i)
       end
       
       def get_all # R-ead
         cmd = "SELECT * FROM songs"
         result = Repos.db.exec(cmd)
-
+        # result.map { |row| build(row) }
         result.map do |song|
           Songify::Song.new(song["song_name"], song["artist"], song["album"], song["id"].to_i)
         end  
-
       end
+
+      def edit(song_id, params)
+        cmd = "UPDATE songs SET () VALUES ()"
+        result = Repos.db.exec(cmd, [song_id]).entries 
+        Songify::Song.new(result[0]["song_name"], result[0]["artist"], result[0]["album"], result[0]["id"].to_i)
+      end  
 
     end
   end
