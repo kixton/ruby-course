@@ -2,8 +2,8 @@ require_relative '../spec_helper.rb'
 
 describe Songify::Repos::Songs do
 
-  let(:song) { Songify::Song.new("Dark Horse", "Katy Perry", "Prism") }
-  let(:song2) { Songify::Song.new("Cry Me A River", "Justin Timberlake", "Justified") }
+  let(:song) { Songify::Song.new(song_name: "Dark Horse", artist: "Katy Perry", album: "Prism") }
+  let(:song2) { Songify::Song.new(song_name: "Cry Me A River", artist: "Justin Timberlake", album: "Justified") }
 
   before(:all) do
     Songify::Repos.instance_variable_set(:@db, PG.connect(host: 'localhost', dbname: 'songify-test'))
@@ -40,22 +40,31 @@ describe Songify::Repos::Songs do
 
       expect(result[0].artist).to eq("Katy Perry")
       expect(result[1].song_name).to eq("Cry Me A River")
-      
     end
   end  
 
   describe "#delete" do
     it "deletes a song" do
       result = Songify.songsrepo.get_all
-
       expect(result.length).to eq(2)
 
       Songify.songsrepo.delete(song2.song_id)
-
       result2 = Songify.songsrepo.get_all
-
       expect(result2.length).to eq(1)
     end
   end
+
+  describe "#edit" do
+    it "updates song name" do
+      pop = Songify::Genre.new(genre_name: "Pop")
+      Songify.genresrepo.add(pop)
+
+      Songify.songsrepo.edit(song.song_id, song_name: "New Song Name", artist: "Katy Perry", album: "New Album", genre_id: 1)
+      
+      result = Songify.songsrepo.get(song.song_id)
+      expect(result.song_name).to eq("New Song Name")
+    end
+  end  
+
 
 end

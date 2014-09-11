@@ -1,47 +1,38 @@
 require_relative '../lib/songify.rb'
 require 'sinatra/base'
-
-module Songify
-  def self.populate_database
-    Songify::Repos.drop_tables
-    Songify::Repos.create_tables
-
-    song1 = Songify::Song.new("Dark Horse", "Katy Perry", "Prism")
-    song2 = Songify::Song.new("Cry Me A River", "Justin Timberlake", "Justified")
-    song3 = Songify::Song.new("Crazy In Love", "Beyonce", "Dangerously In Love")
-
-    Songify.songsrepo.add(song1)
-    Songify.songsrepo.add(song2)
-    Songify.songsrepo.add(song3)
-  end
-end
+# require 'pry-byebug'
 
 class Songify::Server < Sinatra::Application
 
-  get '/songs' do
+  get '/songs' do # returns list of ALL songs
     @songs = Songify.songsrepo.get_all
     erb :allsongs
   end
 
-  get '/songs/new' do
+  get '/songs/new' do # form to create new song
     erb :newsong
   end
 
-  get '/songs/:id' do
+  get '/songs/:id' do # return list of 1 song
     @song = Songify.songsrepo.get(params[:id])
     erb :singlesong
   end
 
-  post '/songs' do
-    song = Songify::Song.new(params["song_name"], params["artist"], params["album"])
+  post '/songs' do # processes new song form
+    song = Songify::Song.new(params[:song_name], params[:artist], params[:album], params[:genre_id])
     Songify.songsrepo.add(song)
     redirect to("/songs/#{song.song_id}")
   end 
 
-  post '/songs/:id/edit' do
+  get '/songs/:id/edit' do
     @song = Songify.songsrepo.get(params[:id])
     erb :editsong
   end  
+
+  put '/songs/:id' do
+    @song = Songify.songsrepo.edit(params[:id], params[:song_name], params[:artist], params[:album], params[:genre_id])
+    redirect to("/songs/#{@song.song_id}")
+  end
 
 end
 

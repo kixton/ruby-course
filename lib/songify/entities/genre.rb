@@ -1,11 +1,11 @@
 module Songify
   class Genre
 
-  attr_accessor :genre, :genre_id
+  attr_accessor :genre_name, :genre_id
 
-  def initialize(genre, genre_id=nil)
-    @genre = genre
-    @gengre_id = genre_id
+  def initialize(params)
+    @genre_name = params[:genre_name]
+    @genre_id = params[:genre_id]
   end  
 
   end    

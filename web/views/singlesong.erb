@@ -2,7 +2,8 @@
 <h3>
   <i>Artist:</i> <%= @song.artist %><br>
   <i>Album:</i> <%= @song.album %><br>
+  <i>Genre:</i> <%= @song.genre_id %><br>
 </h3>
 
-<a href="/songs">Back To All Songs</a>
-<a>Edit Song</a>
+<a href="/songs">Back To All Songs</a><br>
+<a href="/songs/<%= @song.song_id %>/edit">Edit Song</a>

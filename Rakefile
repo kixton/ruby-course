@@ -18,5 +18,9 @@ task :db_drop do
   puts "databases dropped"
 end
 
+task :seed_db do
+  require_relative 'lib/songify.rb'
+  Songify::Repos.populate_database
+end
 
 # bundle exec rake db_create

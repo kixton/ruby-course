@@ -9,22 +9,40 @@
 <body>
 
   <h1>Edit Song</h1>
-  <form action="/songs" method="post">
+  <form action="/songs/<%= @song.song_id %>" method="put">
 
     <div>
       <label for="song_name">Song Name:</label>
-      <input id="song_name" type="text" name="song_name">
+      <input id="song_name" type="text" name="song_name" value="<%= @song.song_name %>">
     </div>
 
     <div>
       <label for="artist">Artist:</label>
-      <input id="artist" type="text" name="artist">
+      <input id="artist" type="text" name="artist" value="<%= @song.artist %>">
     </div>
 
     <div>
       <label for="album">Album:</label>
-      <input id="album" type="text" name="album">
+      <input id="album" type="text" name="album" value="<%= @song.album %>">
     </div>  
+
+    <div>
+      <label for="album">Genre ID:</label>
+      <input id="album" type="number" name="album" value="<%= @song.genre_id %>">
+    </div>  
+
+<!--     <div>
+      <label for="genre">Genre:</label>
+      <select name="genre">
+        <option value="nil"></option>
+        <option value="genre1">Electronic</option>
+        <option value="genre2">Hip Hop</option>
+        <option value="genre3">Pop</option>
+        <option value="genre4">R and B</option>
+        <option value="genre5">Rap</option>
+        <option value="genre6">Rock</option>
+      </select>
+    </div>  -->
 
     <div>
       <input type="submit">
