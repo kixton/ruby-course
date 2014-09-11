@@ -100,11 +100,11 @@ describe Songify::Server do
       Songify.songsrepo.add(song2)
 
       song_list = Songify.songsrepo.get_all
-      expect(song_list.length).to eq(1)
+      expect(song_list.length).to eq(2)
 
       delete '/songs/1/delete'
+      expect(last_response).to be_redirect
 
-      expect(last_response).to be_ok
       song_list = Songify.songsrepo.get_all
       expect(song_list.length).to eq(1)
 

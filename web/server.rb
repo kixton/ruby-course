@@ -50,7 +50,6 @@ class Songify::Server < Sinatra::Application
   end
 
   delete '/songs/:id/delete' do
-    binding.pry
     Songify.songsrepo.delete(params[:id])
     redirect to("/songs")
   end  

@@ -1,7 +1,7 @@
 <h1><a href="/songs">All Songs</a> | All Genres</h1>
 <% @genres.each do |genre| %>
   <div>
-    <a href="/genres/<%=genre.genre_id %>/edit">Edit</a> | 
+    <a href="/genres/<%= genre.genre_id %>/edit">Edit</a> | 
     ID: <%= genre.genre_id %> | <b><%= genre.genre_name %></b><br>
   </div>
 <% end %>

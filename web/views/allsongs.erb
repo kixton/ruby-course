@@ -1,13 +1,22 @@
 <h1>All Songs | <a href="/genres">All Genres</a></h1>
 <% @songs.each do |song| %>
   <div>
-  <a href="/songs/<%= song.song_id %>">View</a> |
-  <a href="/songs/<%= song.song_id %>/edit">Edit</a> |
-  <a href="/songs/<%= song.song_id %>/delete">Delete</a> |
-  <b><%= song.song_name %></b> by <i><%= song.artist %></i>
+  <form style="display:inline;" action="/songs/<%= song.song_id %>">
+    <input type="submit" value="View">
+  </form>
+  <form style="display:inline;" action="/songs/<%= song.song_id %>/edit">
+    <input type="submit" value="Edit">
+  </form>
+  <form style="display:inline;" action="/songs/<%= song.song_id %>/delete" method="post">
+    <input type="hidden" name="_method" value="delete">
+    <input type="submit" value="Delete">
+  </form> |
+  <strong><%= song.song_name %></strong> by <em><%= song.artist %></em>
   <br>
   </div>
 <% end %>
+
+
 
 <br>
 <br>

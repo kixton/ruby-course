@@ -5,4 +5,11 @@
   <i>Album:</i> <%= @song.album %><br>
   <i>Genre:</i> <%= @genre.genre_name if @genre %><br>
 </h3>
-<a href="/songs/<%= @song.song_id %>/edit">Edit Song</a>
+
+<form style="display:inline;" action="/songs/<%= @song.song_id %>/edit">
+  <input type="submit" value="Edit">
+</form>
+<form style="display:inline;" action="/songs/<%= @song.song_id %>/delete" method="post">
+  <input type="hidden" name="_method" value="delete">
+  <input type="submit" value="Delete">
+</form>

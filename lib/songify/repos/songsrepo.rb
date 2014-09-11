@@ -20,7 +20,7 @@ module Songify
       end
       
       def get_all # R-ead
-        cmd = "SELECT * FROM songs"
+        cmd = "SELECT * FROM songs ORDER BY id"
         result = Repos.db.exec(cmd)
         # result.map { |row| build(row) }
         result.map do |song|
@@ -34,6 +34,12 @@ module Songify
         cmd = "UPDATE songs SET (song_name, artist, album, genre_id) = ($1, $2, $3, $4) WHERE id = $5 RETURNING *"
         result = Repos.db.exec(cmd, [params[:song_name], params[:artist], params[:album], genre_id, params[:id]]).entries 
         Songify::Song.new(song_name: result[0]["song_name"], artist: result[0]["artist"], album: result[0]["album"], genre_id: result[0]["genre_id"], song_id: result[0]["id"].to_i)
+      end  
+
+      def find(params)
+        cmd = "SELECT * FROM songs WHERE"
+        result = Repos.db.exec(cmd)
+
       end  
 
     end

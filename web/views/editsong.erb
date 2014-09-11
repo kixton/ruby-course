@@ -31,14 +31,18 @@
       <label for="genre_id">Genre:</label>
       <select id="genre_id" name="genre_id">
         <option value=""></option>
-        <% @all_genres.each do |genre| %>      
-          <% if genre.genre_id == @genre.genre_id %>
-            <option value="<%= genre.genre_id %>" selected><%= genre.genre_name %></option>
-          <% else %>  
-            <option value="<%= genre.genre_id %>"><%= genre.genre_name %></option>
+        
+        <% if @all_genres %>
+          <% @all_genres.each do |genre| %>      
+            <% if @genre && (genre.genre_id == @genre.genre_id) %>
+              <option value="<%= genre.genre_id %>" selected><%= genre.genre_name %></option>
+            <% else %>  
+              <option value="<%= genre.genre_id %>"><%= genre.genre_name %></option>
+            <% end %>
           <% end %>
-        <% end %>
-      </select> <a href="/genres/new">Add New Genre</a>
+        <% end %>  
+      </select> 
+      <a href="/genres/new">Add New Genre</a>
 
     </div> 
 
