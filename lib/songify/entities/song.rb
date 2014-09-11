@@ -13,3 +13,5 @@ module Songify
 
   end    
 end  
+
+# @song = Songify::Song.new({song_name: params[:song_name], artist: params[:artist], album: params[:album]})

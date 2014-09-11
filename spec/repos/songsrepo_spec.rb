@@ -59,7 +59,7 @@ describe Songify::Repos::Songs do
       pop = Songify::Genre.new(genre_name: "Pop")
       Songify.genresrepo.add(pop)
 
-      Songify.songsrepo.edit(song.song_id, song_name: "New Song Name", artist: "Katy Perry", album: "New Album", genre_id: 1)
+      Songify.songsrepo.edit(id: "1", song_name: "New Song Name", artist: "Katy Perry", album: "New Album", genre_id: "1")
       
       result = Songify.songsrepo.get(song.song_id)
       expect(result.song_name).to eq("New Song Name")

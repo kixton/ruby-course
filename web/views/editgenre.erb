@@ -1,0 +1,35 @@
+
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Edit Genres</title>
+</head>
+
+<body>
+<a href="/genres">Back To All Genres</a><br>
+
+  <h1>Edit Genre</h1>
+  <form action="/genres/<%= @genre.genre_id %>" method="post">
+    <input name="_method" type="hidden" value="put">
+    
+    <div>
+      <label for="genre_name">Genre Name:*</label>
+      <input id="genre_name" type="text" name="genre_name" value="<%= @genre.genre_name %>" required>
+    </div>
+
+    <div>
+      <input type="submit">
+    </div>
+
+  </form>
+  
+  <br> 
+
+  <div>
+    * Required Field<br>
+  </div>
+
+</body>
+
+</html>

@@ -8,17 +8,21 @@
 
 <body>
 
+  <div>
+    <a href="/songs">Back To All Songs</a><br>
+  </div>
+
   <h1>Add New Song</h1>
   <form action="/songs" method="post">
 
     <div>
-      <label for="song_name">Song Name:</label>
-      <input id="song_name" type="text" name="song_name">
+      <label for="song_name">Song Name:*</label>
+      <input id="song_name" type="text" name="song_name" required>
     </div>
 
     <div>
-      <label for="artist">Artist:</label>
-      <input id="artist" type="text" name="artist">
+      <label for="artist">Artist:*</label>
+      <input id="artist" type="text" name="artist" required>
     </div>
 
     <div>
@@ -27,20 +31,26 @@
     </div>  
 
     <div>
-      <label for="genre_id">Genre:</label>
-      <select name="genre_id">
-        <option value="1">Electronic</option>
-        <option value="2">Hip Hop</option>
-        <option value="3">Pop</option>
-        <option value="4">R and B</option>
-        <option value="5">Rap</option>
-        <option value="6">Rock</option>
+      <label for="genre_id">Genre:*</label>
+      <select id="genre_id" name="genre_id" required>
+        <option value=""></option>
+        <% @all_genres.each do |genre| %>      
+          <option value="<%= genre.genre_id %>"><%= genre.genre_name %></option>
+        <% end %>
       </select>
-    </div>
+      <a href="/genres/new">Add New Genre</a>
+    </div> 
+    
 
     <input type="submit">
 
   </form>
+
+<div>
+* Required Field<br>
+</div>
+
+<br>
 
 </body>
 

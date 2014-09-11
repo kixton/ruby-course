@@ -31,7 +31,13 @@ describe Songify::Repos::Genres do
 
   describe "#get_all" do
     it "returns all genres" do
-      
+      rock = Songify::Genre.new(genre_name: "Rock")
+      Songify.genresrepo.add(rock)
+
+      result = Songify.genresrepo.get_all
+      expect(result).to be_an(Array)
+      expect(result[0].genre_name).to eq("Pop")
+      expect(result[1].genre_name).to eq("Rock")
     end
   end  
 

@@ -1,7 +1,9 @@
-<h1>All Songs</h1>
+<h1>All Songs | <a href="/genres">All Genres</a></h1>
 <% @songs.each do |song| %>
   <div>
-  <a href="/songs/<%= song.song_id %>">View Song</a> | 
+  <a href="/songs/<%= song.song_id %>">View</a> |
+  <a href="/songs/<%= song.song_id %>/edit">Edit</a> |
+  <a href="/songs/<%= song.song_id %>/delete">Delete</a> |
   <b><%= song.song_name %></b> by <i><%= song.artist %></i>
   <br>
   </div>
@@ -10,8 +12,20 @@
 <br>
 <br>
 
+<div>
+<a href="/songs/new">Add New Song</a>
+</div>
+
+<div>
+<a href="/genres/new">Add New Genre</a>
+</div>
+
+<br>
+
+<hr>
+
 <form>
-  <h3>Search (DOES NOT WORK)</h3>
+  <h3>Coming Soon! Ability to Search for Songs</h3>
     <div>
       <label for="song_name">Song Name:</label>
       <input id="song_name" type="text" name="song_name">
@@ -28,15 +42,12 @@
     </div>  
 
     <div>
-      <label for="genre">Genre:</label>
-      <select name="genre">
-        <option value="nil"></option>
-        <option value="genre1">Electronic</option>
-        <option value="genre2">Hip Hop</option>
-        <option value="genre3">Pop</option>
-        <option value="genre4">R and B</option>
-        <option value="genre5">Rap</option>
-        <option value="genre6">Rock</option>
+      <label for="genre_id">Genre:</label>
+      <select id="genre_id" name="genre_id">
+        <option value=""></option>
+        <% @all_genres.each do |genre| %>      
+          <option value="<%= genre.genre_id %>"><%= genre.genre_name %></option>
+        <% end %>
       </select>
     </div> 
 

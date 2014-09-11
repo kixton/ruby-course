@@ -1,9 +1,8 @@
+<a href="/songs">Back To All Songs</a><br>
 <h1><%= @song.song_name %></h1>
 <h3>
   <i>Artist:</i> <%= @song.artist %><br>
   <i>Album:</i> <%= @song.album %><br>
-  <i>Genre:</i> <%= @song.genre_id %><br>
+  <i>Genre:</i> <%= @genre.genre_name if @genre %><br>
 </h3>
-
-<a href="/songs">Back To All Songs</a><br>
 <a href="/songs/<%= @song.song_id %>/edit">Edit Song</a>

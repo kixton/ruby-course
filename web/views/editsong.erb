@@ -7,18 +7,19 @@
 </head>
 
 <body>
+<a href="/songs">Back To All Songs</a><br>
 
   <h1>Edit Song</h1>
-  <form action="/songs/<%= @song.song_id %>" method="put">
-
+  <form action="/songs/<%= @song.song_id %>" method="post">
+    <input name="_method" type="hidden" value="put">
     <div>
-      <label for="song_name">Song Name:</label>
-      <input id="song_name" type="text" name="song_name" value="<%= @song.song_name %>">
+      <label for="song_name">Song Name:*</label>
+      <input id="song_name" type="text" name="song_name" value="<%= @song.song_name %>" required>
     </div>
 
     <div>
-      <label for="artist">Artist:</label>
-      <input id="artist" type="text" name="artist" value="<%= @song.artist %>">
+      <label for="artist">Artist:*</label>
+      <input id="artist" type="text" name="artist" value="<%= @song.artist %>" required>
     </div>
 
     <div>
@@ -27,28 +28,31 @@
     </div>  
 
     <div>
-      <label for="album">Genre ID:</label>
-      <input id="album" type="number" name="album" value="<%= @song.genre_id %>">
-    </div>  
+      <label for="genre_id">Genre:</label>
+      <select id="genre_id" name="genre_id">
+        <option value=""></option>
+        <% @all_genres.each do |genre| %>      
+          <% if genre.genre_id == @genre.genre_id %>
+            <option value="<%= genre.genre_id %>" selected><%= genre.genre_name %></option>
+          <% else %>  
+            <option value="<%= genre.genre_id %>"><%= genre.genre_name %></option>
+          <% end %>
+        <% end %>
+      </select> <a href="/genres/new">Add New Genre</a>
 
-<!--     <div>
-      <label for="genre">Genre:</label>
-      <select name="genre">
-        <option value="nil"></option>
-        <option value="genre1">Electronic</option>
-        <option value="genre2">Hip Hop</option>
-        <option value="genre3">Pop</option>
-        <option value="genre4">R and B</option>
-        <option value="genre5">Rap</option>
-        <option value="genre6">Rock</option>
-      </select>
-    </div>  -->
+    </div> 
 
     <div>
       <input type="submit">
     </div>
 
   </form>
+  
+  <br> 
+
+  <div>
+    * Required Field<br>
+  </div>
 
 </body>
 

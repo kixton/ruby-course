@@ -56,7 +56,7 @@ module Songify
       Songify.genresrepo.add(genre5)
       Songify.genresrepo.add(genre6)
 
-      song1 = Songify::Song.new(song_name: "Dark Horse", artist: "Katy Perry", album: "Prism", genre_id: "3")
+      song1 = Songify::Song.new(song_name: "Dark Horse", artist: "Katy Perry", album: "Prism", genre_id: 3)
       song2 = Songify::Song.new(song_name: "Lose Yourself", artist: "Eminem", album: "Curtain Call", genre_id: 5)
       song3 = Songify::Song.new(song_name: "Crazy In Love", artist: "Beyonce", album: "Dangerously In Love")
 

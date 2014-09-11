@@ -28,9 +28,11 @@ module Songify
         end  
       end
 
-      def edit(song_id, params)
-        cmd = "UPDATE songs SET (song_name, artist, album, genre_id) = ('#{params[:song_name]}', '#{params[:artist]}', '#{params[:album]}', '#{params[:genre_id]}') WHERE id = '#{song_id}' RETURNING *"
-        result = Repos.db.exec(cmd).entries 
+      def edit(params)
+        # if genre_id is an empty_string, set it to nil 
+        params[:genre_id].empty? ? genre_id = nil : genre_id = params[:genre_id]
+        cmd = "UPDATE songs SET (song_name, artist, album, genre_id) = ($1, $2, $3, $4) WHERE id = $5 RETURNING *"
+        result = Repos.db.exec(cmd, [params[:song_name], params[:artist], params[:album], genre_id, params[:id]]).entries 
         Songify::Song.new(song_name: result[0]["song_name"], artist: result[0]["artist"], album: result[0]["album"], genre_id: result[0]["genre_id"], song_id: result[0]["id"].to_i)
       end  
 

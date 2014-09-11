@@ -58,29 +58,88 @@ describe Songify::Server do
   end  
 
   describe " POST '/songs' " do
-    # bookly example:
-    # post '/books', { "name" => "My New Book", "published_at" => "1987-06-12" }
+    it "adds new song to repo" do
+      post '/songs', { song_name: "LaLa", artist: "Missy", album: "Limited Edition"}
+      expect(last_response).to be_redirect
 
-    post '/songs', { song_name: "LaLa", artist: "Missy", album: "Limited Edition" }
-    expect(last_response).to be_ok
-
-    song = Songly.songsrepo.get_all.last
-    expect(last_response.body).to include(song.song_name)
-
-    # retrieve the last song from the repo
-    # check if that song's information matches what we passed in above
+      # retrieve the last song from the repo
+      song = Songify.songsrepo.get_all.last
+      # check if that song's information matches what we passed in above
+      expect(song.song_name).to eq("LaLa")
+    end  
   end
 
-  describe " get '/songs/:id/edit' " do
-    # get '/songs/:id/edit'
-    # check if inputs have been prefilled
-    # expect(last_response.body).to include("Happy")
-    # similar to retrieves new song
+  describe " GET '/songs/:id/edit' " do
+    it "retrieves 'Edit Song' page" do
+      song = Songify::Song.new(song_name: "Dark Horse", artist: "Katy Perry", album: "Prism")
+      Songify.songsrepo.add(song)
+
+      get '/songs/1/edit'
+      expect(last_response).to be_ok
+      expect(last_response.body).to include("Edit Song")
+      expect(last_response.body).to include("Dark Horse")
+      # check if inputs have been prefilled
+    end  
   end
   
-  describe " put '/songs/:id' " do
-    # put '/songs/:id'
-    # similar to post new song
+  describe " GET '/songs/:id' " do
+    it "updates song information" do
+      rock = Songify::Genre.new(genre_name: "Rock")
+      Songify.genresrepo.add(rock)
+      Songify.songsrepo.add( Songify::Song.new(song_name: "Dark Horse", artist: "Katy Perry", album: "Prism") )
+      put '/songs/1', { song_name: "New Song Name", artist: "New Artist", album: "Prism", genre_id: "1", id: "1" }
+    end  
   end
+
+  describe " DELETE '/songs/:id/delete " do 
+    it "deletes a song" do
+      song = Songify::Song.new(song_name: "Dark Horse", artist: "Katy Perry", album: "Prism")
+      song2 = Songify::Song.new(song_name: "Cry Me A River", artist: "Justin Timberlake", album: "Justified") 
+      
+      Songify.songsrepo.add(song)
+      Songify.songsrepo.add(song2)
+
+      song_list = Songify.songsrepo.get_all
+      expect(song_list.length).to eq(1)
+
+      delete '/songs/1/delete'
+
+      expect(last_response).to be_ok
+      song_list = Songify.songsrepo.get_all
+      expect(song_list.length).to eq(1)
+
+    end  
+  end
+
+
+  # describe " GET '/genres' " do
+  #   it "shows all genres and genre ID" do
+  #     Songify.genresrepo.add( Songify::Genre.new(genre_name: "Pop") )
+  #     Songify.genresrepo.add( Songify::Genre.new(genre_name: "Country") )
+
+  #     get '/genres'
+
+  #     expect(last_response.body).to include("ID: 1")
+  #     expect(last_response.body).to include("Country")
+  #   end
+  # end  
+
+  # describe " GET '/genres/new' " do
+  #   it "retrives form to add new genre" do
+  #     get '/genres/new'
+  #     expect(last_response).to be_ok
+  #     expect(last_response.body).to include("Add New Genre")
+  #   end
+  # end  
+
+  # describe " POST '/songs' " do
+  #   it "adds new genre to repo" do
+  #     post '/genres', { genre_name: "Hip Hop"}
+  #     expect(last_response).to be_redirect
+
+  #     genre = Songify.genresrepo.get_all.last
+  #     expect(genre.genre_name).to eq("Hip Hop")
+  #   end  
+  # end
 
 end
