@@ -37,9 +37,8 @@ module Songify
       end  
 
       def find(params)
-        cmd = "SELECT * FROM songs WHERE"
+        cmd = "SELECT * FROM songs WHERE () = ()"
         result = Repos.db.exec(cmd)
-
       end  
 
     end
